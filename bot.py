@@ -126,7 +126,7 @@ class cmdHandler:
             return "say ..." #TODO
 
     def on_uptime(self):
-        return 'say', str(timedelta(seconds=time()-self.bot.start)))
+        return 'say', str(timedelta(seconds=time()-self.bot.start))
 
     def on_ping(self):
         return 'say ping'
