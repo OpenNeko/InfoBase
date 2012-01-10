@@ -122,13 +122,13 @@ class cmdHandler:
         if self.cmd.ctgry and hasattr(self, 'on_'+self.cmd.ctgry):
             getattr(self, 'on_'+self.cmd.ctgry)()
         else:
-            self.bot.say('...', chan) #TODO
+            self.bot.say(self.chan, '...') #TODO
 
     def on_uptime(self):
-        self.bot.say(str(timedelta(seconds=time()-self.bot.start)), self.chan)
+        self.bot.say(self.chan, str(timedelta(seconds=time()-self.bot.start)))
 
     def on_ping(self):
-        self.bot.say('ping', self.chan)
+        self.bot.say(self.chan, 'ping')
           
 
 class line(str):
