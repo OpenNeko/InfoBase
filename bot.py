@@ -98,8 +98,8 @@ class ircHandler:
             self.actor.say(self.datar.Chan, "Nya!")
  
     def on_cmd(self):
-        c = cmd(self.datar.Msg)
-        s = cmdHandler(self.actor, c, self.datar.Chan)()
+        c = cmd(self.datar.Msg.lower())
+        cmdHandler(self.actor, c, self.datar.Chan)()
 
 class cmdHandler:
     """
@@ -128,7 +128,7 @@ class cmdHandler:
         self.bot.say(self.chan, str(timedelta(seconds=time()-self.bot.start)))
 
     def on_ping(self):
-        self.bot.say(self.chan, 'ping')
+        self.bot.say(self.chan, 'Pong')
           
 
 class line(str):
