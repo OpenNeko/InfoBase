@@ -48,7 +48,7 @@ class bot:
         """
         Join the channel [c] and logs it into [channel]
         """
-        self.Send('JOIN {0}\n'.format(c))
+        self.Send('JOIN {0}\n'.format(c.lower()))
         self.channel.append(c)
 
     def Send(self, m):
