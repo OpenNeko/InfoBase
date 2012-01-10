@@ -99,15 +99,13 @@ class ircHandler:
  
     def on_cmd(self):
         c = cmd(self.datar.Msg)
-        s = cmdHandler(self.actor, c)()
-        if hasattr(self, 'on_'+s[0]):
-            self.actor.getattr(self, s[0])()
+        s = cmdHandler(self.actor, c, self.datar.Chan)()
 
 class cmdHandler:
     """
     Manages the commands
     """
-    def __init__(self, actor, cmd):
+    def __init__(self, actor, cmd, chan):
         """
         Initilization;
         [actor] - Bot actor
@@ -115,21 +113,22 @@ class cmdHandler:
         """
         self.bot = actor
         self.cmd = cmd
+        self.chan = chan
 
     def __call__(self):
         """
         Calls the functions associated to the command
         """
         if self.cmd.ctgry and hasattr(self, 'on_'+self.cmd.ctgry):
-            return getattr(self, 'on_'+self.cmd.ctgry)()
+            getattr(self, 'on_'+self.cmd.ctgry)()
         else:
-            return "say ..." #TODO
+            self.bot.say('...', chan) #TODO
 
     def on_uptime(self):
-        return 'say', str(timedelta(seconds=time()-self.bot.start))
+        self.bot.say(str(timedelta(seconds=time()-self.bot.start)), self.chan)
 
     def on_ping(self):
-        return 'say ping'
+        self.bot.say('ping', self.chan)
           
 
 class line(str):
