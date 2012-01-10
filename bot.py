@@ -48,7 +48,7 @@ class bot:
         """
         Join the channel [c] and logs it into [channel]
         """
-        self.Send('JOIN {0}\n'.format(c.lower()))
+        self.Send('JOIN {0}\n'.format(c))
         self.channel.append(c)
 
     def Send(self, m):
@@ -246,7 +246,7 @@ class cmd(str):
 JouhouNeko=bot(socket.socket())
 JouhouNeko.connect()
 JouhouNeko.join('#openneko')
-JouhouNeko.join('##OneWhoHelps')
+JouhouNeko.join('##userexperience')
 
 while 1:
     li = line(JouhouNeko.receive())
