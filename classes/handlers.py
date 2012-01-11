@@ -41,8 +41,6 @@ class IrcHandler:
         if self.datas.Action and hasattr(self, 
                                          'on_' + self.datas.Action):
             getattr(self, 'on_' + self.datas.Action)()
-        else:
-            pass #TODO
 
     def on_kick(self):
         self.actor.join(self.actor.channel[0])
@@ -56,7 +54,7 @@ class IrcHandler:
  
     def on_cmd(self):
         c = Cmd(self.datas.Msg.lower())
-        cmdHandler(self.actor, c, self.datas.Chan)()
+        CmdHandler(self.actor, c, self.datas.Chan)()
 
 class CmdHandler:
     """Manages the commands"""
