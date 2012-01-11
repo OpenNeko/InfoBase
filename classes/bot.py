@@ -54,7 +54,7 @@ class Bot:
         self.connect()
         self.join(channels)
         while 1:
-            li = datatypes.Line(self.receive())
+            li = datatypes.Line(self.pull())
             print li
             h = handlers.IrcHandler(self, li)
             h()
