@@ -54,9 +54,9 @@ class Bot:
         self.connect()
         self.join(channels)
         while 1:
-            li = datatypes.line(JouhouNeko.receive())
+            li = datatypes.Line(JouhouNeko.receive())
             print li
-            h = handlers.ircHandler(JouhouNeko, li)
+            h = handlers.IrcHandler(JouhouNeko, li)
             h()
         
     def connect(self):
