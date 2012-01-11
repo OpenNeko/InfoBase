@@ -20,6 +20,7 @@
 """Bot classes"""
 
 import socket
+from time import time
 
 import handlers
 import datatypes
