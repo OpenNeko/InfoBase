@@ -46,8 +46,7 @@ class IrcHandler:
         self.actor.join(self.actor.channel[0])
 
     def on_ping(self):
-        self.actor.push('PONG {0} {1}'.format(self.actor.nick, 
-                                              self.datas.user))
+        self.actor.push('PONG {0}'.format(self.datas.user))
 
     def on_msg(self):
         if self.actor.nick.lower() in self.datas.Msg.lower():
