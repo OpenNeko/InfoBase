@@ -24,8 +24,9 @@ from a database.
 """
 
 from classes import bot
+from socket import socket
 
-jouhou_neko = bot(socket.socket())
+jouhou_neko = bot(socket())
 
 if __name__ == '__main__':
     jouhou_neko('#openneko')
