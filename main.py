@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 #-*- coding: Latin-1 -*-
 # Copyright 2012 Python Snake
 #
@@ -17,11 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Infobase. If not, see <http://www.gnu.org/licenses/>.
 
- """A very simple Python bot.
- This bot responds to simple commands. It retrieves and manipulates datas
- from a database.
+"""A very simple Python bot.
+This bot responds to simple commands. It retrieves and manipulates datas
+from a database.
 
- """
+"""
 
 from classes import bot
 
