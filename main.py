@@ -28,5 +28,5 @@ from classes import bot
 jouhou_neko = bot(socket.socket())
 
 if __name__ == '__main__':
-    jouhou_neko('#openneko)
+    jouhou_neko('#openneko')
 
