@@ -23,10 +23,10 @@ from a database.
 
 """
 
-from classes import bot
+from classes import Bot
 from socket import socket
 
-jouhou_neko = bot(socket())
+jouhou_neko = Bot(socket())
 
 if __name__ == '__main__':
     jouhou_neko('#openneko')
