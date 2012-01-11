@@ -23,7 +23,7 @@ from a database.
 
 """
 
-from classes import Bot
+from classes.bot import Bot
 from socket import socket
 
 jouhou_neko = Bot(socket())
