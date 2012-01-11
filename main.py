@@ -26,7 +26,7 @@ from a database.
 from classes.bot import Bot
 from socket import socket
 
-jouhou_neko = Bot(socket())
+jouhou_neko = Bot(socket(), 'irc.irchighway.net')
 
 if __name__ == '__main__':
     jouhou_neko('#openneko,##onewhohelps')

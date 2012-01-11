@@ -27,7 +27,7 @@ import datatypes
 
 class Bot:
     """This is the bot."""
-    def __init__(self, sock):
+    def __init__(self, sock, ss, pp=6667):
         """Initialization;
         Attributes:
             Logging
@@ -35,13 +35,15 @@ class Bot:
                 [channel]: joined channels
             Identification
                 [nick]![ident]@hostmask: [realname]
-            [server]: server to connect
+            [ss]: server to connect
+            [pp]: port of server [ss]
+                default value: 6667
             [owner]: hostmask of the owner
             [s]: the socket to use
             
         """
         self.start = time()
-        self.server = ("holmes.freenode.net", 6667)
+        self.server = (ss, pp)
         self.nick = 'JouhouNeko'
         self.realname = '=3'
         self.ident = 'cat'
