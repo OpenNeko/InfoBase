@@ -1,14 +1,24 @@
 #!/usr/bin/env python
 #-*- coding: Latin-1 -*-
+#  Copyright 2012 Python Snake
 
-#Importing modules
+ """A very simple Python bot.
+ 
+ This bot responds to simple commands. It retrieves and manipulates datas 
+ from a database.
+ 
+ """
+
 import socket
-#import sqlite3 #Useless... for now
 from time import time
 from datetime import timedelta
 
+#import sqlite3 #Useless... for now
+
 class bot:
-    """This is the bot."""
+    """This is the bot.
+    
+    """
     
     def __init__(self, sock):
         """Initialization;
@@ -21,6 +31,7 @@ class bot:
             [server]: server to connect
             [owner]: hostmask of the owner
             [s]: the socket to use
+            
         """
         self.start = time()
         self.server = ("holmes.freenode.net", 6667)
@@ -32,48 +43,62 @@ class bot:
         self.channel = []
         
     def connect(self):
-        """Connect to [server]"""
+        """Connect to [server]
+        
+        """
         self.s.connect(self.server)
         self.Send('NICK {0}'.format(self.nick))
         self.Send('USER {0} {1} bla :{2}'.format(self.ident, self.server, 
                                                  self.realname))
         
     def receive(self):
-        """Receive datas from the server [server]"""
+        """Receive datas from the server [server]
+        
+        """
         return self.s.recv(999999999) #trying to avoid time attacks
   
     def join(self, c):
         """Join the channel list [c] (each channel is separated by a comma)
         and logs it into [channel]
+        
         """
         for ch in c.split(","):
         	self.Send('JOIN {0}'.format(c))
         	self.channel.append(c)
 
     def Send(self, m):
-        """Send [m] to the server [server] via the socket [s]"""
+        """Send [m] to the server [server] via the socket [s]
+        
+        """
         self.s.send(m+'\n')
  
     def say(self, where, what):
-        """Say [what] in the channel [where]"""
+        """Say [what] in the channel [where]
+        
+        """
         self.Send("PRIVMSG {0} :{1}".format(where, what))
 
 
 class ircHandler:
-    """Irc Handler - Manages the irc """
+    """Irc Handler - Manages the irc 
+    
+    """
 
     def __init__(self, actor, datar):
         """Initialization;
         [actor] - Bot actor
         [datar] - line object to manipulate
+        
         """
         self.actor = actor
         self.datar = datar
 
     def __call__(self):
-        """Calls the functions associated to the data"""
+        """Calls the functions associated to the data
+        
+        """
         if self.datar.Action and hasattr(self, 
-                                         'on_'+self.datar.Action):
+                                         'on_' + self.datar.Action):
             getattr(self, 'on_' + self.datar.Action)()
         else:
             pass #TODO
@@ -93,7 +118,9 @@ class ircHandler:
         cmdHandler(self.actor, c, self.datar.Chan)()
 
 class cmdHandler:
-    """Manages the commands"""
+    """Manages the commands
+    
+    """
     def __init__(self, actor, cmd, chan):
         """Initilization;
         [actor] - Bot actor
@@ -104,14 +131,16 @@ class cmdHandler:
         self.chan = chan
 
     def __call__(self):
-        """Calls the functions associated to the command"""
-        if self.cmd.ctgry and hasattr(self, 'on_'+self.cmd.ctgry):
-            getattr(self, 'on_'+self.cmd.ctgry)()
+        """Calls the functions associated to the command
+        
+        """
+        if self.cmd.ctgry and hasattr(self, 'on_' + self.cmd.ctgry):
+            getattr(self, 'on_' + self.cmd.ctgry)()
         else:
             self.bot.say(self.chan, '...') #TODO
 
     def on_uptime(self):
-        self.bot.say(self.chan, str(timedelta(seconds=time()-
+        self.bot.say(self.chan, str(timedelta(seconds=time() - 
                                     self.bot.start)))
 
     def on_ping(self):
@@ -121,6 +150,7 @@ class cmdHandler:
 class line(str):
     """line class that parses datas received 
     from the irc server [server]
+    
     """
     def __init__(self, strline):
         """
@@ -129,6 +159,7 @@ class line(str):
         [Action], [Msg], [User], [Chan]. Pretty verbose
         :nick!user@host action channel/user :message
         eg. :who!me@there.org PRIVMSG #whatever :blahblah
+        
         """
         self.l = strline
         self.Action = self.action()
@@ -139,6 +170,7 @@ class line(str):
     def __str__(self):
         """Prints the line
         [Action] from [User]: [Msg]
+        
         """
         if self.Action and self.Msg:
             return "{0} from {1}: {2}".format(self.Action, self.User, self.Msg)
@@ -182,10 +214,13 @@ class line(str):
 
 
 class cmd(str):
-    """cmd class"""
+    """cmd class
+    
+    """
     def __init__(self, s):
         """Initialization;
-        [command], [ctgry], [query], [thing], [args(list)] are verbose~
+        [command], [ctgry], [query], [thing], [args(list)] are verbose.
+        
         """
         self.command = s.strip()[1:-1].split(" ")
         self.ctgry = self.ctg()
@@ -196,6 +231,7 @@ class cmd(str):
     def __str__(self):
         """Prints the command
         From [ctgry], do [query] with [thing]~ [args]
+        
         """
         return "From {0}, do {1} with {2}~ {3}".format(self.ctgry, self.query, 
                                                        self.thing, self.args)
