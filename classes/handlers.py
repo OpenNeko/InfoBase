@@ -27,34 +27,34 @@ from datatypes import Cmd, Line
 class IrcHandler:
     """Irc Handler - Manages the irc"""
 
-    def __init__(self, actor, datas):
+    def __init__(self, actor, data):
         """Initialization;
         [actor] - Bot actor
         [datas] - line object to manipulate
         
         """
         self.actor = actor
-        self.datas = datas
+        self.data = data
 
     def __call__(self):
         """Calls the functions associated to the data"""
-        if self.datas.Action and hasattr(self, 
-                                         'on_' + self.datas.Action):
-            getattr(self, 'on_' + self.datas.Action)()
+        if self.data.Action and hasattr(self, 
+                                         'on_' + self.data.Action):
+            getattr(self, 'on_' + self.data.Action)()
 
     def on_kick(self):
         self.actor.join(self.actor.channel[0])
 
     def on_ping(self):
-        self.actor.push('PONG {0}'.format(self.datas.user))
+        self.actor.push('PONG {0}'.format(self.data.user))
 
     def on_msg(self):
-        if self.actor.nick.lower() in self.datas.Msg.lower():
-            self.actor.say(self.datas.Chan, "Nya!")
+        if self.actor.nick.lower() in self.data.Msg.lower():
+            self.actor.say(self.data.Chan, "Nya!")
  
     def on_cmd(self):
-        c = Cmd(self.datas.Msg.lower())
-        CmdHandler(self.actor, c, self.datas.Chan)()
+        c = Cmd(self.data.Msg.lower())
+        CmdHandler(self.actor, c, self.data.Chan)()
 
 class CmdHandler:
     """Manages the commands"""
