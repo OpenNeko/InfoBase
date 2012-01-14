@@ -19,7 +19,8 @@
 
 """Bot classes"""
 
-import socket
+from socket import socket
+import ssl
 from time import time
 
 import handlers
@@ -27,28 +28,13 @@ import datatypes
 
 class Bot:
     """This is the bot."""
-    def __init__(self, sock, ss, pp=6667):
-        """Initialization;
-        Attributes:
-            Logging
-                [start]: start time
-                [channel]: joined channels
-            Identification
-                [nick]![ident]@hostmask: [realname]
-            [ss]: server to connect
-            [pp]: port of server [ss]
-                default value: 6667
-            [owner]: hostmask of the owner
-            [s]: the socket to use
-            
-        """
+    def __init__(self, infos):
         self.start = time()
-        self.server = (ss, pp)
-        self.nick = 'JouhouNeko'
-        self.realname = '=3'
-        self.ident = 'cat'
-        self.owner = 'unaffiliated/pythonsnake'
-        self.s = sock
+        for i in infos:
+            setattr(self, i, infos[i])
+        self.s = socket()
+        if self.ssl:
+            self.s = ssl.wrap_socket(self.s)
         self.channel = []
 
     def __call__(self, channels):
@@ -63,10 +49,10 @@ class Bot:
         
     def connect(self):
         """Connect to [server]"""
-        self.s.connect(self.server)
+        self.s.connect((self.server, self.port))
         self.push('NICK {0}'.format(self.nick))
         self.push('USER {0} {1} bla :{2}'.format(self.ident, self.server, 
-                                                 self.realname))
+                                                 self.real_name))
         
     def pull(self):
         """Receive datas from the server [server]"""
