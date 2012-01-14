@@ -76,10 +76,7 @@ class Line(str):
 
     def user(self):
         if self.Action:
-            if self.Action == 'ping':
-                return self.line.split(":")[1].strip()
-            else:
-                return self.line[1:].split(" ")[0]
+            return self.line[1:].split(" ")[0]
         else:
             return ''
     

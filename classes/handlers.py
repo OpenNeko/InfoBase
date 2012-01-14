@@ -38,15 +38,14 @@ class IrcHandler:
 
     def __call__(self):
         """Calls the functions associated to the data"""
-        if self.data.Action and hasattr(self, 
-                                         'on_' + self.data.Action):
+        if self.data.Action and hasattr(self, 'on_' + self.data.Action):
             getattr(self, 'on_' + self.data.Action)()
 
     def on_kick(self):
         self.actor.join(self.actor.channel[0])
 
     def on_ping(self):
-        self.actor.push('PONG {0}'.format(self.data.user))
+        self.actor.push('PONG {0}'.format(self.actor.server))
 
     def on_msg(self):
         if self.actor.nick.lower() in self.data.Msg.lower():
