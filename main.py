@@ -23,11 +23,19 @@ from a database.
 
 """
 
-from classes.bot import Bot
-from socket import socket
+import sys
 
-jouhou_neko = Bot(socket(), 'irc.irchighway.net')
+from classes.bot import Bot
+import classes.cfg as cfg
+
+try:
+    i = sys.argv[1]
+except IndexError:
+    sys.exit("No config specified.")
+else:
+    things = cfg.Config(i).info
+    jouhou_neko = Bot(things)
 
 if __name__ == '__main__':
-    jouhou_neko('#openneko,##onewhohelps')
+    jouhou_neko('#openneko')
 
