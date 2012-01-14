@@ -39,13 +39,16 @@ class Bot:
 
     def __call__(self, channels):
         """Call the bot in the [channels]"""
-        self.connect()
-        self.join(channels)
-        while 1:
-            li = datatypes.Line(self.pull())
-            print li
-            h = handlers.IrcHandler(self, li)
-            h()
+        try:
+            self.connect()
+            self.join(channels)
+            while 1:
+                li = datatypes.Line(self.pull())
+                print li
+                h = handlers.IrcHandler(self, li)
+                h()
+        except KeyboardInterrupt:
+            print "Shutting Down..."
         
     def connect(self):
         """Connect to [server]"""
