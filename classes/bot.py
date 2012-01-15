@@ -20,8 +20,9 @@
 """Bot classes"""
 
 from socket import socket
-import ssl
-from time import time
+from ssl import wrap_socket
+from time import time, sleep
+from sys import exit
 
 import handlers
 import datatypes
@@ -34,7 +35,7 @@ class Bot:
             setattr(self, i, infos[i])
         self.s = socket()
         if self.ssl:
-            self.s = ssl.wrap_socket(self.s)
+            self.s = wrap_socket(self.s)
         self.channel = []
 
     def __call__(self, channels):
@@ -46,12 +47,14 @@ class Bot:
                 li = datatypes.Line(self.pull())
                 if li[:4] == 'PING':
                     pass
+                elif not li:
+                    sleep(5)
                 else:
                     print li
                 h = handlers.IrcHandler(self, li)
                 h()
         except KeyboardInterrupt:
-            print "Shutting Down..."
+            self.quit()
         
     def connect(self):
         """Connect to [server]"""
@@ -80,3 +83,8 @@ class Bot:
     def say(self, where, what):
         """Say [what] in the channel [where]"""
         self.push("PRIVMSG {0} :{1}".format(where, what))
+
+    def quit(self):
+        self.push("QUIT")
+        self.s.close()
+        exit("Shutting down...")
