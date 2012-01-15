@@ -52,12 +52,12 @@ class IrcHandler:
             self.actor.say(self.data.Chan, "Nya!")
  
     def on_cmd(self):
-        c = Cmd(self.data.Msg.lower())
-        CmdHandler(self.actor, c, self.data.Chan)()
+        c = Cmd(self.data.Msg)
+        CmdHandler(self.actor, self.data.User, c, self.data.Chan)()
 
 class CmdHandler:
     """Manages the commands"""
-    def __init__(self, actor, cmd, chan):
+    def __init__(self, actor, wanter, cmd, chan):
         """Initilization;
         [actor] - Bot actor
         [cmd] - cmd object to manipulate
@@ -65,6 +65,7 @@ class CmdHandler:
         self.bot = actor
         self.cmd = cmd
         self.chan = chan
+        self.wanter = wanter
 
     def __call__(self):
         """Calls the functions associated to the command"""
@@ -78,4 +79,17 @@ class CmdHandler:
                                     self.bot.start)))
 
     def on_ping(self):
-        self.bot.say(self.chan, 'Pong')
+        self.bot.say(self.chan, 'pong')
+
+    def on_quit(self):
+        self.bot.quit()
+
+    def on_sudo(self):
+        w = " ".join(self.cmd.command[1:]).strip().lower()
+        if self.wanter.split('@')[1] in self.bot.owner_host:
+            if hasattr(self, 'on_' + w):
+                getattr(self, 'on_' + w)()
+            else:
+                self.bot.push(w)
+        else:
+            self.bot.say(self.chan, "No, sir.")
