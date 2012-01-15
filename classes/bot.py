@@ -44,7 +44,10 @@ class Bot:
             self.join(channels)
             while 1:
                 li = datatypes.Line(self.pull())
-                print li
+                if li[:4] == 'PING':
+                    pass
+                else:
+                    print li
                 h = handlers.IrcHandler(self, li)
                 h()
         except KeyboardInterrupt:
