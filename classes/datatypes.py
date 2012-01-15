@@ -92,7 +92,7 @@ class Cmd(str):
         [command], [ctgry], [query], [thing], [args(list)] are verbose.
         
         """
-        self.command = s.strip()[1:-1].split(" ")
+        self.command = s.strip()[1:-1].lower().split(" ")
         self.ctgry = self.ctg()
         self.query = self.qry()
         self.thing = self.thi()
@@ -120,14 +120,14 @@ class Cmd(str):
 
     def qry(self):
         if len(self.command) > 1:
-            return self.command[1] 
+            return self.command[1]
         else:
             return ''
 
     def arg(self):
         a = []
         if len(self.command) > 2:
-            for x in self.command[2:]:
+            for x in self.command.split(" ")[2:]:
                 if x.startswith("-"):
                     a.append(x)
         return a
