@@ -12,7 +12,8 @@ class Config:
         self.info = self.parse()
 
     def parse(self):
-        strs = 'nick', 'ident', 'real_name', 'server', 'owner', 'channels'
+        strs = 'nick', 'ident', 'real_name', 'server', 'channels'
+        lists = 'owner_host'
         bools = 'ssl'
         ints = 'port'
         infos = {}
@@ -41,6 +42,12 @@ class Config:
                         raise ConfigError(opt, 'a number')
                     else:
                         infos[opt] = int(val)
+
+                elif opt in lists:
+                    tmp = val.split(",")
+                    for i in enumerate(tmp):
+                        tmp[i[0]] = i[1].strip()
+                    infos[opt] = tmp
 
                 else:
                     pass
