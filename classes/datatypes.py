@@ -127,7 +127,7 @@ class Cmd(str):
     def arg(self):
         a = []
         if len(self.command) > 2:
-            for x in self.command.split(" ")[2:]:
+            for x in self.command[2:]:
                 if x.startswith("-"):
                     a.append(x)
         return a

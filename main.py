@@ -28,14 +28,15 @@ import sys
 from classes.bot import Bot
 import classes.cfg as cfg
 
-try:
-    i = sys.argv[1]
-except IndexError:
-    sys.exit("No config specified.")
-else:
-    things = cfg.Config(i).info
-    jouhou_neko = Bot(things)
+def main():
+    try:
+        i = sys.argv[1]
+    except IndexError:
+        sys.exit("No configuration file specified.")
+    else:
+        things = cfg.Config(i).info
+        jouhou_neko = Bot(things)
+        jouhou_neko('#openneko')
 
 if __name__ == '__main__':
-    jouhou_neko('#openneko')
-
+    main()
